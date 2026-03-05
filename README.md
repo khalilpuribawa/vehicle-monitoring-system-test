@@ -75,6 +75,7 @@ Saat menjalankan seeder, beberapa user default akan dibuat:
 ## Teknologi yang Digunakan
 
 - Backend: Laravel 11
-- UI/Styling: Tailwind CSS 4.0, Flowbite
+- Frontend: React JS, Inertia.js
+- UI/Styling: Tailwind CSS 4.0, Flowbite React / Flowbite
 - Export Excel: Maatwebsite Excel
 - Grafik: Chart.js

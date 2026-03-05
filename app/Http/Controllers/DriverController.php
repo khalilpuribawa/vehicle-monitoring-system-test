@@ -12,12 +12,14 @@ class DriverController extends Controller
     public function index()
     {
         $drivers = Driver::latest()->get();
-        return view('drivers.index', compact('drivers'));
+        return \Inertia\Inertia::render('Drivers/Index', [
+            'drivers' => $drivers
+        ]);
     }
 
     public function create()
     {
-        return view('drivers.create');
+        return \Inertia\Inertia::render('Drivers/Create');
     }
 
     public function store(Request $request)
@@ -42,7 +44,9 @@ class DriverController extends Controller
 
     public function edit(Driver $driver)
     {
-        return view('drivers.edit', compact('driver'));
+        return \Inertia\Inertia::render('Drivers/Edit', [
+            'driver' => $driver
+        ]);
     }
 
     public function update(Request $request, Driver $driver)

@@ -20,13 +20,17 @@ class BookingController extends Controller
         if ($user->role === 'admin') {
             $bookings = Booking::with(['vehicle', 'driver', 'approvals.approver'])->latest()->get();
         } else {
-            // Approvers see bookings they need to approve
-            $bookings = Booking::whereHas('approvals', function($q) use ($user) {
-                $q->where('approver_id', $user->id);
-            })->with(['vehicle', 'driver', 'approvals.approver'])->latest()->get();
+            $bookings = Booking::with(['vehicle', 'driver', 'approvals.approver'])
+                ->whereHas('approvals', function($query) use ($user) {
+                    $query->where('approver_id', $user->id);
+                })
+                ->latest()
+                ->get();
         }
 
-        return view('bookings.index', compact('bookings'));
+        return \Inertia\Inertia::render('Bookings/Index', [
+            'bookings' => $bookings
+        ]);
     }
 
     public function create()
@@ -35,7 +39,11 @@ class BookingController extends Controller
         $drivers = Driver::where('status', 'available')->get();
         $approvers = User::whereIn('role', ['approver', 'approver_level_1', 'approver_level_2'])->get(); // Based on how db is seeded
 
-        return view('bookings.create', compact('vehicles', 'drivers', 'approvers'));
+        return \Inertia\Inertia::render('Bookings/Create', [
+            'vehicles' => $vehicles,
+            'drivers' => $drivers,
+            'approvers' => $approvers
+        ]);
     }
 
     public function store(Request $request)

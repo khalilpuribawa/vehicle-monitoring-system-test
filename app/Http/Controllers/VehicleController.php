@@ -12,12 +12,14 @@ class VehicleController extends Controller
     public function index()
     {
         $vehicles = Vehicle::latest()->get();
-        return view('vehicles.index', compact('vehicles'));
+        return \Inertia\Inertia::render('Vehicles/Index', [
+            'vehicles' => $vehicles
+        ]);
     }
 
     public function create()
     {
-        return view('vehicles.create');
+        return \Inertia\Inertia::render('Vehicles/Create');
     }
 
     public function store(Request $request)
@@ -50,7 +52,9 @@ class VehicleController extends Controller
 
     public function edit(Vehicle $vehicle)
     {
-        return view('vehicles.edit', compact('vehicle'));
+        return \Inertia\Inertia::render('Vehicles/Edit', [
+            'vehicle' => $vehicle
+        ]);
     }
 
     public function update(Request $request, Vehicle $vehicle)
@@ -84,7 +88,9 @@ class VehicleController extends Controller
     public function show(Vehicle $vehicle)
     {
         $vehicle->load(['bookings.driver', 'bookings.admin', 'fuelLogs', 'serviceSchedules']);
-        return view('vehicles.show', compact('vehicle'));
+        return \Inertia\Inertia::render('Vehicles/Show', [
+            'vehicle' => $vehicle
+        ]);
     }
 
     public function storeFuel(Request $request, Vehicle $vehicle)

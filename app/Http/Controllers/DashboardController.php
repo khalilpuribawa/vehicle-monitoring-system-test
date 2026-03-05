@@ -17,6 +17,9 @@ class DashboardController extends Controller
             $q->where('type', 'angkutan barang');
         })->count();
 
-        return view('dashboard.index', compact('orangCount', 'barangCount'));
+        return \Inertia\Inertia::render('Dashboard/Index', [
+            'orangCount' => $orangCount,
+            'barangCount' => $barangCount
+        ]);
     }
 }
